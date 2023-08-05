@@ -1,0 +1,94 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO Chat</title>
+</head>
+<body>
+  <h1>Socket.IO Chat</h1>
+  <div id="messages"></div>
+  <input type="text" id="messageInput" placeholder="Type a message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io('/chat');
+
+    // Event handler for a new message from the server
+    socket.on('message', (message) => {
+      const messagesDiv = document.getElementById('messages');
+      messagesDiv.innerHTML += `<p>${message}</p>`;
+    });
+
+    function sendMessage() {
+      const messageInput = document.getElementById('messageInput');
+      const message = messageInput.value;
+      if (message) {
+        socket.emit('message', message);
+        messageInput.value = '';
+      }
+    }
+  </script>
+</body>
+</html>
+ -->
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO Broadcast</title>
+</head>
+<body>
+  <h1>Socket.IO Broadcast</h1>
+  <ul id="notifications"></ul>
+
+  <input id="room" placeholder="Room" />
+  <input id="message" placeholder="Message" />
+  <button id="join">Join Room</button>
+  <button id="send">Send Message</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const joinButton = document.getElementById('join');
+    const sendButton = document.getElementById('send');
+    const roomInput = document.getElementById('room');
+    const messageInput = document.getElementById('message');
+
+    joinButton.addEventListener('click', () => {
+      const room = roomInput.value;
+      socket.emit('join', room);
+    });
+
+    sendButton.addEventListener('click', () => {
+      const room = roomInput.value;
+      const message = messageInput.value;
+      socket.emit('broadcast', room, message);
+    });
+
+    socket.on('message', (message) => {
+      const messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      document.body.appendChild(messageElement);
+    });
+    socket.on('addedItem', (resource) => {
+      const notifications = document.getElementById('notifications');
+      const li = document.createElement('li');
+      li.textContent = `Resource '${resource.title}' has been added.`;
+      notifications.appendChild(li);
+    });
+
+    socket.on('deletedItem', (resource) => {
+      const notifications = document.getElementById('notifications');
+      const li = document.createElement('li');
+      li.textContent = `Resource '${resource.title}' has been deleted.`;
+      notifications.appendChild(li);
+    });
+    socket.on('updatedItem', (resource) => {
+      const notifications = document.getElementById('notifications');
+      const li = document.createElement('li');
+      li.textContent = `Resource '${resource.id}' title has been updated to ${resource.new.title}.`;
+      notifications.appendChild(li);
+    });
+  </script>
+</body>
+</html>
