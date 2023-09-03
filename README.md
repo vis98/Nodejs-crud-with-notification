@@ -1,4 +1,6 @@
-# test-assignment
+# Nodejs crud with notification
+
+crud of resource for eg book in this case. also after addition or deletion notifcation gets to all users using socket.
 
 Steps to run a application
 
