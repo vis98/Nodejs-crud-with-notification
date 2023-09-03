@@ -57,7 +57,7 @@ const secret_key='secret@98';
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://mishravishal958:2Ny5B9T4zPmwwCJD@cluster0.vfhxfv2.mongodb.net/'+'test', {
+mongoose.connect('mongourl'+'test', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
